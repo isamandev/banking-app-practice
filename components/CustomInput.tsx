@@ -4,9 +4,9 @@ import { Input } from './ui/input';
 
 import { Control, FieldPath } from 'react-hook-form';
 import { z } from 'zod';
-import { authformSchema } from '@/lib/utils';
+import { authFormSchema } from '@/lib/utils';
 
-const formSchema = authformSchema('sign-up');
+const formSchema = authFormSchema('sign-up');
 
 interface CustomInput {
 	control: Control<z.infer<typeof formSchema>>;
@@ -21,14 +21,18 @@ function CustomInput({ control, name, label, placeholder }: CustomInput) {
 			name={name}
 			render={({ field }) => (
 				<div className='form-item'>
-					<FormLabel className='form-lable'>{label}</FormLabel>
+					<FormLabel className='form-label' htmlFor={name}>
+						{label}
+					</FormLabel>
 					<div className='flex w-full flex-col'>
 						<FormControl>
 							<Input
+								id={name}
 								placeholder={placeholder}
 								className='input-class'
 								type={name === 'password' ? 'password' : 'text'}
 								{...field}
+								value={field.value || ''}
 							/>
 						</FormControl>
 						<FormMessage className='form-message mt-2' />

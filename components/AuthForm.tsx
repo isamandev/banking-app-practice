@@ -12,17 +12,26 @@ import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import CustomInput from './CustomInput';
-import { authformSchema } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import { signIn, signUp } from '@/lib/actions/user.actions';
+import { authFormSchema } from '@/lib/utils';
 
 function AuthForm({ type }: { type: string }) {
 	const router = useRouter();
-	const formSchema = authformSchema(type);
+	const formSchema = authFormSchema(type);
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
+			firstName: '',
+			lastName: '',
 			email: '',
 			password: '',
+			address1: '',
+			city: '',
+			state: '',
+			postalCode: '',
+			dateOfBirth: '',
+			ssn: '',
 		},
 	});
 
@@ -32,12 +41,12 @@ function AuthForm({ type }: { type: string }) {
 		try {
 			// Sign up with Appwrite & create plain link token
 			if (type === 'sign-up') {
-				// const newUser = await SignUp(data);
-				// setUser(newUser);
+				const newUser = await signUp(data);
+				setUser(newUser);
 			}
 
 			if (type === 'sign-in') {
-				// const response = await SignIn({
+				// const response = await signIn({
 				// 	email: data.email,
 				// 	password: data.password,
 				// });
