@@ -17,6 +17,8 @@ import { signIn, signUp } from '@/lib/actions/user.actions';
 import { authFormSchema } from '@/lib/utils';
 
 function AuthForm({ type }: { type: string }) {
+	const [user, setUser] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 	const formSchema = authFormSchema(type);
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -46,11 +48,11 @@ function AuthForm({ type }: { type: string }) {
 			}
 
 			if (type === 'sign-in') {
-				// const response = await signIn({
-				// 	email: data.email,
-				// 	password: data.password,
-				// });
-				// if (response) router.push('/');
+				const response = await signIn({
+					email: data.email,
+					password: data.password,
+				});
+				if (response) router.push('/');
 			}
 		} catch (error) {
 			console.log(error);
@@ -58,8 +60,7 @@ function AuthForm({ type }: { type: string }) {
 			setIsLoading(false);
 		}
 	}
-	const [user, setUser] = useState(null);
-	const [isLoading, setIsLoading] = useState(false);
+
 	return (
 		<section className='auth-form'>
 			<header className='flex flex-col gap-5 md:gap-8'>
