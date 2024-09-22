@@ -12,7 +12,7 @@ async function Home() {
 					<HeaderBox
 						type='greeting'
 						title='Welcome'
-						user={LoggedIn?.name || 'Guest'}
+						user={LoggedIn?.firstName || 'Guest'}
 						subtext='Access and manage your account and transactions efficiently.'
 					/>
 					<TotalBalanceBox accounts={[]} totalBanks={1} totalCurrentBalance={1250.35} />
